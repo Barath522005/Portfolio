@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barath V — Full-Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0B1220;
+    --ink-2: #0E1726;
+    --panel: #131C2C;
+    --panel-border: #233045;
+    --text: #EDEFF2;
+    --text-dim: #8C9AB3;
+    --text-dimmer: #5C6B85;
+    --teal: #2DD4BF;
+    --teal-dim: rgba(45, 212, 191, 0.12);
+    --amber: #F5A623;
+    --red: #FB7185;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(45, 212, 191, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(45, 212, 191, 0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 28px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ---------- Top nav ---------- */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(11, 18, 32, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--panel-border);
+  }
+  .topbar-inner {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 16px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .brand {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text);
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 8px var(--teal);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .navlinks {
+    display: flex;
+    gap: 24px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--text-dim);
+  }
+  .navlinks a:hover { color: var(--teal); }
+  @media (max-width: 640px) {
+    .navlinks { display: none; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 88px 0 64px;
+    position: relative;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 18px;
+    height: 1px;
+    background: var(--teal);
+  }
+  h1 {
+    font-family: var(--mono);
+    font-weight: 800;
+    font-size: clamp(34px, 6vw, 58px);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  h1 .accent { color: var(--teal); }
+  .hero-sub {
+    margin-top: 22px;
+    max-width: 540px;
+    font-size: 17px;
+    color: var(--text-dim);
+  }
+  .hero-actions {
+    margin-top: 32px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 12px 22px;
+    border-radius: 6px;
+    border: 1px solid var(--panel-border);
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-primary {
+    background: var(--teal);
+    color: var(--ink);
+    border-color: var(--teal);
+  }
+  .btn-primary:hover { background: #5eead4; }
+  .btn-ghost { color: var(--text); }
+  .btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
+
+  /* ---------- Status panel (signature element) ---------- */
+  .panel {
+    margin-top: 56px;
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .panel-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--panel-border);
+    background: var(--ink-2);
+  }
+  .panel-head .traffic { display: flex; gap: 6px; }
+  .traffic span {
+    width: 9px; height: 9px; border-radius: 50%;
+  }
+  .traffic span:nth-child(1) { background: #fb7185; }
+  .traffic span:nth-child(2) { background: #f5a623; }
+  .traffic span:nth-child(3) { background: #2dd4bf; }
+  .panel-head .title {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dimmer);
+    margin-left: 6px;
+  }
+  .panel-body {
+    padding: 6px 0;
+  }
+  .service-row {
+    display: grid;
+    grid-template-columns: 18px 1.4fr 0.9fr 0.7fr;
+    gap: 16px;
+    align-items: center;
+    padding: 13px 20px;
+    font-family: var(--mono);
+    font-size: 13px;
+    border-bottom: 1px solid rgba(35, 48, 69, 0.5);
+  }
+  .service-row:last-child { border-bottom: none; }
+  .status-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 6px var(--teal);
+  }
+  .svc-name { color: var(--text); font-weight: 500; }
+  .svc-meta { color: var(--text-dimmer); font-size: 12px; }
+  .svc-status {
+    color: var(--teal);
+    font-size: 11.5px;
+    text-align: right;
+    letter-spacing: 0.02em;
+  }
+  @media (max-width: 600px) {
+    .service-row { grid-template-columns: 14px 1fr; row-gap: 4px; }
+    .svc-meta, .svc-status { grid-column: 2; text-align: left; }
+  }
+
+  /* ---------- Section scaffolding ---------- */
+  section { padding: 72px 0; border-top: 1px solid var(--panel-border); }
+  .section-label {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--text-dimmer);
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+  }
+  .section-label .path { color: var(--teal); }
+  h2 {
+    font-family: var(--mono);
+    font-size: clamp(22px, 3.4vw, 28px);
+    font-weight: 700;
+    margin-bottom: 36px;
+    color: var(--text);
+  }
+
+  /* ---------- About ---------- */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 48px;
+  }
+  @media (max-width: 720px) {
+    .about-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+  .about-text p { color: var(--text-dim); font-size: 15.5px; margin-bottom: 16px; }
+  .about-text strong { color: var(--text); font-weight: 600; }
+
+  .stack-list { display: flex; flex-direction: column; gap: 18px; }
+  .stack-group .label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dimmer);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    padding: 6px 12px;
+    border-radius: 5px;
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    color: var(--text-dim);
+  }
+
+  /* ---------- Experience (terminal log style) ---------- */
+  .log-entry {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--panel-border);
+  }
+  .log-entry:last-child { border-bottom: none; }
+  @media (max-width: 640px) {
+    .log-entry { grid-template-columns: 1fr; gap: 8px; }
+  }
+  .log-time {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--teal);
+    padding-top: 3px;
+  }
+  .log-role { font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .log-org { font-family: var(--mono); font-size: 12.5px; color: var(--text-dimmer); margin-bottom: 14px; }
+  .log-body { color: var(--text-dim); font-size: 14.5px; }
+  .log-body ul { padding-left: 18px; }
+  .log-body li { margin-bottom: 7px; }
+  .log-body li::marker { color: var(--teal); }
+
+  /* ---------- Projects ---------- */
+  .project-card {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 10px;
+    padding: 28px;
+    transition: border-color 0.15s ease;
+  }
+  .project-card:hover { border-color: var(--teal); }
+  .project-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+    gap: 16px;
+  }
+  .project-title { font-size: 18px; font-weight: 600; color: var(--text); }
+  .project-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink);
+    background: var(--teal);
+    padding: 4px 9px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .project-desc { color: var(--text-dim); font-size: 14.5px; margin-bottom: 18px; }
+  .stack-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .stack-tags span {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--text-dimmer);
+    border: 1px solid var(--panel-border);
+    padding: 4px 9px;
+    border-radius: 4px;
+  }
+
+  /* ---------- Education / Certs ---------- */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+  .info-card {
+    border: 1px solid var(--panel-border);
+    border-radius: 10px;
+    padding: 22px;
+  }
+  .info-card .when {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+  .info-card .what { font-size: 15.5px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .info-card .where { font-size: 13.5px; color: var(--text-dimmer); }
+  .badge-status {
+    display: inline-block;
+    margin-top: 12px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    padding: 3px 9px;
+    border-radius: 4px;
+    letter-spacing: 0.03em;
+  }
+  .badge-status.done { background: var(--teal-dim); color: var(--teal); }
+  .badge-status.active { background: rgba(245, 166, 35, 0.12); color: var(--amber); }
+
+  /* ---------- Contact / footer ---------- */
+  .contact-section { text-align: left; }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-top: 28px;
+  }
+  @media (max-width: 560px) { .contact-grid { grid-template-columns: 1fr; } }
+  .contact-card {
+    border: 1px solid var(--panel-border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .contact-card:hover { border-color: var(--teal); background: var(--panel); }
+  .contact-icon {
+    width: 36px; height: 36px;
+    border-radius: 7px;
+    background: var(--teal-dim);
+    color: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .contact-label { font-family: var(--mono); font-size: 10.5px; color: var(--text-dimmer); text-transform: uppercase; letter-spacing: 0.05em; }
+  .contact-value { font-size: 14.5px; color: var(--text); font-weight: 500; }
+
+  footer {
+    border-top: 1px solid var(--panel-border);
+    padding: 28px 0 40px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dimmer);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* focus visibility */
+  a:focus-visible, .btn:focus-visible, .contact-card:focus-visible {
+    outline: 2px solid var(--teal);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brand .dot { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="dot"></span>barath@dev</div>
+    <nav class="navlinks">
+      <a href="#about">about</a>
+      <a href="#experience">experience</a>
+      <a href="#projects">projects</a>
+      <a href="#education">education</a>
+      <a href="#contact">contact</a>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" style="border-top:none; padding-top: 88px;">
+    <div class="eyebrow">SOFTWARE ENGINEER · OPEN TO WORK</div>
+    <h1>Barath V builds and<br>ships <span class="accent">full-stack</span><br>web systems.</h1>
+    <p class="hero-sub">
+      MERN stack developer who takes products from React component to AWS deployment —
+      currently keeping a live queue-management platform running while finishing
+      a Master's in Computer Applications.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#contact">Get in touch →</a>
+      <a class="btn btn-ghost" href="#projects">View projects</a>
+    </div>
+
+    <!-- Signature element: deploy status panel -->
+    <div class="panel">
+      <div class="panel-head">
+        <div class="traffic"><span></span><span></span><span></span></div>
+        <div class="title">~/barath/stack-status</div>
+      </div>
+      <div class="panel-body">
+        <div class="service-row">
+          <span class="status-dot"></span>
+          <span class="svc-name">react-frontend</span>
+          <span class="svc-meta">React.js · Tailwind</span>
+          <span class="svc-status">● RUNNING</span>
+        </div>
+        <div class="service-row">
+          <span class="status-dot"></span>
+          <span class="svc-name">node-api</span>
+          <span class="svc-meta">Node.js · Express</span>
+          <span class="svc-status">● RUNNING</span>
+        </div>
+        <div class="service-row">
+          <span class="status-dot"></span>
+          <span class="svc-name">data-layer</span>
+          <span class="svc-meta">MongoDB · MySQL</span>
+          <span class="svc-status">● RUNNING</span>
+        </div>
+        <div class="service-row">
+          <span class="status-dot"></span>
+          <span class="svc-name">cloud-infra</span>
+          <span class="svc-meta">AWS · Docker</span>
+          <span class="svc-status">● MONITORED</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label"><span class="path">~/about</span></div>
+    <h2>Profile</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          <strong>Barath is a full-stack developer</strong> with hands-on experience across
+          Java, the MERN stack, and AWS cloud infrastructure. He's spent the last year
+          moving between two kinds of work: building features for a live commercial
+          product, and shipping custom sites for freelance clients — learning the
+          difference between writing code and running it in production.
+        </p>
+        <p>
+          He's comfortable across the stack: React interfaces on the front,
+          Express/Node APIs on the back, MongoDB and MySQL for data, and AWS for
+          hosting, monitoring, and keeping things online. He's now looking for an
+          entry-level Software Engineer role where that range is useful.
+        </p>
+      </div>
+      <div class="stack-list">
+        <div class="stack-group">
+          <div class="label">Frontend</div>
+          <div class="pill-row">
+            <span class="pill">React.js</span>
+            <span class="pill">JavaScript</span>
+            <span class="pill">Tailwind CSS</span>
+            <span class="pill">HTML / CSS</span>
+          </div>
+        </div>
+        <div class="stack-group">
+          <div class="label">Backend</div>
+          <div class="pill-row">
+            <span class="pill">Node.js</span>
+            <span class="pill">Express.js</span>
+            <span class="pill">Java</span>
+          </div>
+        </div>
+        <div class="stack-group">
+          <div class="label">Data & Cloud</div>
+          <div class="pill-row">
+            <span class="pill">MongoDB</span>
+            <span class="pill">MySQL</span>
+            <span class="pill">AWS</span>
+            <span class="pill">Docker</span>
+          </div>
+        </div>
+        <div class="stack-group">
+          <div class="label">Tools</div>
+          <div class="pill-row">
+            <span class="pill">GitHub</span>
+            <span class="pill">VS Code</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-label"><span class="path">~/experience</span> — most recent first</div>
+    <h2>Work log</h2>
+
+    <div class="log-entry">
+      <div class="log-time">MAR 2026 —<br>JUN 2026</div>
+      <div>
+        <div class="log-role">Application Developer</div>
+        <div class="log-org">MR.Q Smart Queue Management</div>
+        <div class="log-body">
+          <ul>
+            <li>Developed and maintained the MR.Q website, designing and shipping new features based on direct user requirements.</li>
+            <li>Managed application deployment, hosting, and monitoring on AWS, including cloud resources, storage, and uptime.</li>
+            <li>Handled ongoing updates, bug fixes, and performance improvements, plus technical support for application issues.</li>
+            <li>Worked alongside the team to keep the platform running smoothly day to day.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="log-entry">
+      <div class="log-time">JUN 2025 —<br>PRESENT</div>
+      <div>
+        <div class="log-role">Freelance Software Developer</div>
+        <div class="log-org">Self-employed</div>
+        <div class="log-body">
+          <ul>
+            <li>Built and delivered custom websites for college students and academic projects, end to end.</li>
+            <li>Implemented backend functionality, database integration, and user authentication for client sites.</li>
+            <li>Gathered requirements directly from clients and translated them into technical solutions.</li>
+            <li>Managed project delivery against deadlines while keeping quality consistent.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label"><span class="path">~/projects</span></div>
+    <h2>Selected projects</h2>
+
+    <div class="project-card">
+      <div class="project-head">
+        <div class="project-title">Real-Time Chat Application</div>
+        <div class="project-tag">MERN STACK</div>
+      </div>
+      <p class="project-desc">
+        A full-stack messaging app built around real-time communication —
+        live message delivery handled across the stack rather than bolted on
+        with polling.
+      </p>
+      <div class="stack-tags">
+        <span>MongoDB</span><span>Express.js</span><span>React.js</span><span>Node.js</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION & CERTIFICATION -->
+  <section id="education">
+    <div class="section-label"><span class="path">~/education</span></div>
+    <h2>Education & certification</h2>
+
+    <div class="two-col">
+      <div class="info-card">
+        <div class="when">2025 – 2027</div>
+        <div class="what">Master of Computer Application</div>
+        <div class="where">SRM University</div>
+        <span class="badge-status active">IN PROGRESS</span>
+      </div>
+      <div class="info-card">
+        <div class="when">2022 – 2025</div>
+        <div class="what">B.Sc. Computer Science</div>
+        <div class="where">Merit Arts and Science College</div>
+        <span class="badge-status done">COMPLETED</span>
+      </div>
+      <div class="info-card">
+        <div class="when">JAN – APR 2025</div>
+        <div class="what">MERN Stack Developer Course</div>
+        <div class="where">Novitech</div>
+        <span class="badge-status done">COMPLETED</span>
+      </div>
+      <div class="info-card">
+        <div class="when">SOFT SKILLS</div>
+        <div class="what">Leadership · Problem-solving</div>
+        <div class="where">Communication · Teamwork · Adaptability</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact-section">
+    <div class="section-label"><span class="path">~/contact</span></div>
+    <h2>Get in touch</h2>
+    <p style="color: var(--text-dim); font-size: 15.5px; max-width: 480px;">
+      Open to entry-level Software Engineer roles. Reach out directly —
+      happy to talk through any of the work above.
+    </p>
+    <div class="contact-grid">
+      <a class="contact-card" href="tel:+919342562866">
+        <div class="contact-icon">@</div>
+        <div>
+          <div class="contact-label">Phone</div>
+          <div class="contact-value">9342562866</div>
+        </div>
+      </a>
+      <a class="contact-card" href="mailto:barathvb50686@gmail.com">
+        <div class="contact-icon">✉</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value">barathvb50686@gmail.com</div>
+        </div>
+      </a>
+      <a class="contact-card" href="#" onclick="return false;">
+        <div class="contact-icon">in</div>
+        <div>
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-value">View profile</div>
+        </div>
+      </a>
+      <a class="contact-card" href="#" onclick="return false;">
+        <div class="contact-icon">{}</div>
+        <div>
+          <div class="contact-label">GitHub</div>
+          <div class="contact-value">View repos</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Barath V</span>
+    <span>built with React, Node & a deploy pipeline that actually works</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
